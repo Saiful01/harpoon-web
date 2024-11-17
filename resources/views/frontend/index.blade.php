@@ -306,7 +306,7 @@
                     <input type="email" name="email" placeholder="ই-মেইল*"/>
                 </div>
                 <textarea name="details"
-                          placeholder="আপনার গল্পটি সর্বোচ্চ ৩০০ শব্দের মধ্যে এখানে লিখুন" maxlength="500"
+                          placeholder="আপনার গল্পটি সর্বোচ্চ ৫০০ শব্দের মধ্যে এখানে লিখুন" maxlength="800"
                           required></textarea>
                 <button
                     type="submit"
