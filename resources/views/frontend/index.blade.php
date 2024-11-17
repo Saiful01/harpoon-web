@@ -201,7 +201,7 @@
                 </button>
             </div>
             <div class="hash-section">
-                <p>Post on social media using the hashtag #HygieneForAll  #PowerForHer 
+                <p>নিচের  হ্যাশট্যাগ গুলো ব্যবহার করে সোশ্যাল মিডিয়াতে পোস্ট করুন: <br> #HygieneForAll  #PowerForHer 
                     #Harpoon</p>
             </div>
 
@@ -384,7 +384,7 @@
 
                     </div>
                     <button type="submit" style="background: #0051a3; border: none; margin-top: 10px"><img
-                            src="/assets/JPG/Video-Link-Button.png"
+                            src="/assets/JPG/Video-Submit-Button.png"
                             alt="Upload"
                             style="cursor: pointer"
                             {{--onclick="document.getElementById('fileInput').click()"--}}
@@ -429,6 +429,60 @@
 
                     @foreach($blogs as $item)
 
+                     {{--   <!-- Modal -->
+                        <div id="modal" class="modal">
+                            <div class="modal-content">
+                                <span class="modal-close" onclick="closeModal()">&times;</span>
+                                <h3 id="modal-title"></h3>
+                                <p id="modal-content"></p>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal -->
+                        <div id="myModal" style="display: none">
+                            <div
+                                style="
+          background-color: white;
+          padding: 20px;
+          border-radius: 5px;
+          width: 90%;
+          max-width: 500px;
+          margin: 100px auto;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          position: relative;
+        "
+                            >
+                                <h3 style="margin: 0; font-size: 18px">শমী ওয়াদিদ</h3>
+                                <p style="margin: 10px 0; font-size: 14px">
+                                    বিস্তারিত আলোচনা এখানে দেওয়া হয়েছে। ফিল্ম হাউজিং ও আলোর গুরুত্ব
+                                    সম্পর্কে আরও জানুন।
+                                </p>
+                                <button
+                                    id="closeModal"
+                                    style="
+            background-color: #007bff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+                                >
+                                    বন্ধ করুন
+                                </button>
+                            </div>
+
+
+                            //button modify
+                            <button
+                                style="color: #007bff; font-size: 14px"
+                                onclick="openModal('হেদায়েত উল্লাহ', 'ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত বিবেচনা।')"
+                            >
+                                আরও পড়ুন...
+                            </button>
+                        </div>--}}
+
                         <div
                             style="
               background-color: white;
@@ -445,7 +499,7 @@
                                 {{ \Illuminate\Support\Str::limit($item->details, 200, '') }}
 
                             </p>
-                            <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                            <a href="#"  style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
                         </div>
 
                     @endforeach
@@ -511,6 +565,9 @@
             </div>
         </div>
     </section>
+
+
+
 
 
     <!-- Video Section -->
@@ -587,12 +644,15 @@
             </div>
             <div class="footer-right">
                 <p>Follow Us On:</p>
-                <a href="#" class="social-icon"
+                <a href="https://www.facebook.com/harpoon.bd" class="social-icon"
                 ><img src="assets/logo/facebook.png" alt="Facebook"
                     /></a>
 
-                <a href="#" class="social-icon"
+                <a href="https://www.instagram.com/harpoonqel" class="social-icon"
                 ><img src="assets/logo/instagram.png" alt="Instagram"
+                    /></a>
+                <a href="https://www.youtube.com/@quazienterpriseslimited4993" class="social-icon"
+                ><img src="assets/logo/Youtube-Icon.png" alt="Youtube"
                     /></a>
             </div>
         </div>
@@ -693,26 +753,30 @@
         }
 
         document.getElementById('save-button').addEventListener('click', async function () {
-            const messageElement = document.createElement('div');
-            messageElement.textContent = 'আপনার ছবি ডাউনলোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।';
-            messageElement.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #0051a3; color: white; padding: 20px; border-radius: 5px; z-index: 1000;';
-            document.body.appendChild(messageElement);
+
 
             const blob = await createCombinedImage();
             if (blob) {
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = 'combined_image.png';
+                link.download = 'hygien_for_all_certificate.png';
                 link.click();
                 URL.revokeObjectURL(url);
+
+                const messageElement = document.createElement('div');
+                messageElement.textContent = 'আপনার ছবি ডাউনলোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।';
+                messageElement.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #0051a3; color: white; padding: 20px; border-radius: 5px; z-index: 1000;';
+                document.body.appendChild(messageElement);
+
+                setTimeout(() => {
+                    document.body.removeChild(messageElement);
+                }, 3000);
             } else {
                 alert('সংযুক্ত ছবি তৈরি করতে ব্যর্থ হয়েছে।');
             }
 
-            setTimeout(() => {
-                document.body.removeChild(messageElement);
-            }, 3000);
+
         });
 
         // Add event listener for the file input
@@ -736,6 +800,27 @@
                 fileNameDisplay.textContent = ''; // Clear if no file is selected
             }
         });
+
+
+        // Open the modal and set its content
+        function openModal(title, content) {
+            document.getElementById("modal-title").innerText = title;
+            document.getElementById("modal-content").innerText = content;
+            document.getElementById("modal").style.display = "block";
+        }
+
+        // Close the modal
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        // Close the modal when clicking outside the modal content
+        window.onclick = function (event) {
+            const modal = document.getElementById("modal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
     </script>
 
 
