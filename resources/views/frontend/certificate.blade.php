@@ -103,7 +103,7 @@
             <img src="/assets/certificates/Home-Page.png" alt="Home" />
         </a>
         <div class="actions" style="display: flex">
-            <a href="/{{$certificate->file}}" download="certificate" >
+            <a href="/{{$certificate->file}}" download="hygiene for all_certificate" >
                 <img
                     src="/assets/certificates/Download.png"
                     style="cursor: pointer"

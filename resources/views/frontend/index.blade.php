@@ -201,8 +201,7 @@
                 </button>
             </div>
             <div class="hash-section">
-                <p>নিচের  হ্যাশট্যাগ গুলো ব্যবহার করে সোশ্যাল মিডিয়াতে পোস্ট করুন: <br> #HygieneForAll  #PowerForHer 
-                    #Harpoon</p>
+                <p>নিচের  হ্যাশট্যাগ গুলো ব্যবহার করে সোশ্যাল মিডিয়াতে পোস্ট করুন: <br>#Harpoon #HygieneForAllPowerForHer</p>
             </div>
 
         </div>
@@ -760,7 +759,7 @@
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = 'hygien_for_all_certificate.png';
+                link.download = 'HygieneForAll.png';
                 link.click();
                 URL.revokeObjectURL(url);
 
