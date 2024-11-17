@@ -73,9 +73,11 @@ class ImageController extends Controller
         return redirect()->route('admin.images.index');
     }
 
-    public function show(Image $image)
+    public function show($id)
     {
         abort_if(Gate::denies('image_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $image = Image::with(['media'])->find($id);
 
         return view('admin.images.show', compact('image'));
     }

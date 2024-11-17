@@ -50,9 +50,11 @@ class BlogController extends Controller
         return redirect()->route('admin.blogs.index');
     }
 
-    public function show(Blog $blog)
+    public function show($id)
     {
         abort_if(Gate::denies('blog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $blog = Blog::find($id);
 
         return view('admin.blogs.show', compact('blog'));
     }

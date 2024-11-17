@@ -6,13 +6,15 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [Controller::class, 'home'])->name('home');
 Route::get('/certificate', [Controller::class, 'certificate'])->name('certificate');
-Route::get('/certificates/{value}', [Controller::class, 'urlRedirect'])->name('redirect.home');
+Route::get('/certificate/{id}', [Controller::class, 'show'])->name('certificate.show');
 
 
 
 Route::any('/certificate-save/{value}', [Controller::class, 'certificateSave'])->name('certificate.save');
 Route::post('/blog-save', [Controller::class, 'blogSave'])->name('blog.save');
 Route::post('/video-save', [Controller::class, 'videoSave'])->name('video.save');
+
+Route::post('/upload-image', [Controller::class, 'upload']);
 
 
 
@@ -22,6 +24,14 @@ Route::get('/create-storage-link', function () {
         return 'Storage link created successfully!';
     } catch (\Exception $e) {
         return 'Failed to create storage link: ' . $e->getMessage();
+    }
+});
+Route::get('/optimize-clear', function () {
+    try {
+        Artisan::call('optimize:clear');
+        return 'Optimize clear successfully!';
+    } catch (\Exception $e) {
+        return 'Failed to Optimize clear: ' . $e->getMessage();
     }
 });
 

@@ -1,16 +1,9 @@
+@extends("layouts.frontend")
+@section('title', $title)
+@section('description', $description)
+@section('image', $image)
+@section("content")
 
-
-{{--<a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank">
-    Share on Facebook
-</a>--}}
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Certificate</title>
     <style>
         body {
             background-color: #cdebf8;
@@ -95,16 +88,14 @@
             }
         }
     </style>
-</head>
-<body>
+
 <div class="container">
     <!-- certificate header -->
     <div class="certificate-header">
-        <img
-            src="/{{$certificate->file}}"
-            style="width: 100%"
-            alt="Certificate"
-        />
+
+        <img src="{{ asset($certificate->file) }}" style="width: 100%;" alt="Certificate">
+
+
     </div>
     <!-- buttons -->
     <div class="buttons">
@@ -122,21 +113,25 @@
                 />
             </a>
             <div class="share-section" style="margin-left: 100px">
-                <p>শেয়ার করুন</p>
+                <p>শেয়ার করুন</p> <br>
                 <div
                     class="social-icons"
                     style="display: flex; justify-content: center"
                 >
-                   {{-- <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer">
+                   {{-- <a href="https://www.facebook.com/sharer/sharer.php?u={{ $pageUrl }}" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/logo/facebook.png" alt="Facebook" />
                     </a>--}}
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode('https://example.com/certificate-save/' . $value) }}" target="_blank" rel="noopener noreferrer">
+
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ $pageUrl }}" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/logo/facebook.png" alt="Facebook" />
                     </a>
+                   {{-- <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode('https://hygieneforall.co/certificate-save/'. $value) }}" target="_blank" rel="noopener noreferrer">
+                        <img src="/assets/logo/facebook.png" alt="Facebook" />
+                    </a>--}}
 
-                    <a href="#" target="_blank" rel="noopener noreferrer">
+                   {{-- <a href="#" target="_blank" rel="noopener noreferrer">
                         <img src="/assets/logo/instagram.png" alt="Instagram" />
-                    </a>
+                    </a>--}}
                 </div>
             </div>
         </div>
@@ -151,8 +146,7 @@
 <div class="footer">
     <img src="/assets/certificates/Logo-with-Text.png" alt="Logo" />
 </div>
-</body>
-</html>
+@endsection
 
 
 

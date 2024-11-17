@@ -61,11 +61,15 @@
                                 {{ $certificate->phone ?? '' }}
                             </td>
                             <td>
-                                @if($certificate->certificate)
+                                {{--@if($certificate->certificate)
                                     <a href="{{ $certificate->certificate->getUrl() }}" target="_blank" style="display: inline-block">
                                         <img src="{{ $certificate->certificate->getUrl('thumb') }}">
                                     </a>
-                                @endif
+                                @endif--}}
+                                <a href="{{ asset($certificate->file) }}" download="certificate">
+                                    <img src="{{ asset($certificate->file) }}" width="100px" alt="certificate">
+                                </a>
+
                             </td>
                             <td>
                                 @can('certificate_show')
@@ -146,7 +150,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

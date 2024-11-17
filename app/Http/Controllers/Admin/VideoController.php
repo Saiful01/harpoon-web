@@ -73,9 +73,11 @@ class VideoController extends Controller
         return redirect()->route('admin.videos.index');
     }
 
-    public function show(Video $video)
+    public function show($id)
     {
         abort_if(Gate::denies('video_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $video = Video::with(['media'])->find($id);
 
         return view('admin.videos.show', compact('video'));
     }

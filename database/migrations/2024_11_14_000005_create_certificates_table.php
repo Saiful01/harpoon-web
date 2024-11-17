@@ -14,6 +14,7 @@ class CreateCertificatesTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('certificate')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

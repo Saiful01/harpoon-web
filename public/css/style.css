@@ -357,6 +357,14 @@ body {
 }
 
 /* ========== Story Section ========== */
+.hash-section {
+
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
 .story-section {
     padding: 50px;
     border-radius: 10px;
@@ -519,5 +527,32 @@ textarea {
 
     .video-section {
         display: block;
+    }
+}
+
+
+
+.video-section {
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 videos per row on larger screens */
+    gap: 16px;
+    /* Space between videos */
+    padding: 16px;
+    /* Optional padding around the section */
+}
+
+.video-section video {
+    width: 100%;
+    /* Make videos responsive */
+    height:150px;
+    /* Maintain aspect ratio */
+}
+
+@media (max-width: 768px) {
+    .video-section {
+        grid-template-columns: 1fr;
+        /* 1 video per row on smaller screens */
     }
 }

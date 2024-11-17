@@ -73,9 +73,10 @@ class CertificateController extends Controller
         return redirect()->route('admin.certificates.index');
     }
 
-    public function show(Certificate $certificate)
+    public function show($id)
     {
         abort_if(Gate::denies('certificate_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $certificate = Certificate::with(['media'])->find($id);
 
         return view('admin.certificates.show', compact('certificate'));
     }

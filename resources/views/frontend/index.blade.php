@@ -3,6 +3,7 @@
 @section('description', $description)
 @section('image', $image)
 @section("content")
+    <meta property="og:image" content="{{ $image }}"/>
 
     <style>
         .image-frame {
@@ -39,7 +40,41 @@
         #preview-background {
             z-index: 2;
         }
+
+
     </style>
+    <!-- Header Navigation -->
+    <header class="header-nav">
+        <nav>
+            <div class="logo">
+                <a href="/">
+                    <img
+                        src="/assets/images/Harpon.png"
+                        class="logo-image"
+                        alt="Harpon Logo"
+                    />
+                </a>
+                <div class="divider"></div>
+                <img
+                    src="/assets/images/WTD.png"
+                    class="logo-image"
+                    alt="WTD Logo"
+                />
+            </div>
+            <ul class="nav-links">
+                <li><a href="#join-now">জয়েন করুন</a></li>
+                <li><a href="#shopoth">শপথ নিন</a></li>
+                <li><a href="#story">আওয়াজ তুলুন</a></li>
+                <li><a href="#video">সাথে থাকুন</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
 
     <!-- Hero Section with Carousel -->
     <section class="carousel">
@@ -110,6 +145,8 @@
                 style="background: linear-gradient(90deg, #000078, #017fcb)"
             ></div>
         </div>
+
+
         <div class="" style="margin: 50px 0px">
             <div class="photo-frame">
                 <div>
@@ -141,7 +178,7 @@
                             style="cursor: pointer; width: 200px; height: 170px"
                             onclick="document.getElementById('imageInput').click()"
                         />
-                        <input type="file"  id="imageInput" onchange="uploadImage()" style="display: none"/>
+                        <input type="file" id="imageInput" onchange="uploadImage()" style="display: none"/>
                     </div>
                     <h3>ছবি আপলোড করুন</h3>
                 </div>
@@ -157,11 +194,19 @@
             </div>
             <div class="personal-poster">
                 <h3>আপনার পোস্টার</h3>
-                <button style="background: none; border: none;" id="save-button"><img src="/assets/JPG/Save-Button.png" alt=""/></button>
-                <button style="background: none; border: none;" id="share-button"><img src="/assets/JPG/Share-Button.png" alt=""/>
+                <button style="background: none; border: none;" id="save-button"><img src="/assets/JPG/Save-Button.png"
+                                                                                      alt=""/></button>
+               {{-- <button style="background: none; border: none;" id="shareButton"><img src="/assets/JPG/Share-Button.png"
+                                                                                      alt=""/>--}}
                 </button>
             </div>
+            <div class="hash-section">
+                <p>Post on social media using the hashtag #HygieneForAll  #PowerForHer 
+                    #Harpoon</p>
+            </div>
+
         </div>
+
     </div>
 
 
@@ -202,7 +247,7 @@
                 <form action="{{ route('certificate.save', ['value' => time()]) }}" method="post">
                     @csrf
                     <div class="input-data">
-                        <input type="text" name="name" placeholder="আপনার নাম"/>
+                        <input type="text" name="name" placeholder="আপনার নাম" required/>
                         <input type="tel" name="phone" placeholder="মোবাইল নম্বর"/>
                         <input type="text" name="email" placeholder="ইমেইল"/>
                     </div>
@@ -252,11 +297,11 @@
                 @csrf
                 <div class="input-group">
                     <input type="text" name="name" placeholder="আপনার নাম*" required/>
-                    <input type="email" name="email" placeholder="ই-মেইল*" required/>
+                    <input type="email" name="email" placeholder="ই-মেইল*"/>
                 </div>
                 <textarea name="details"
-                    placeholder="আপনার গল্পটি সর্বোচ্চ ৩০০ শব্দের মধ্যে এখানে লিখুন"
-                ></textarea>
+                          placeholder="আপনার গল্পটি সর্বোচ্চ ৩০০ শব্দের মধ্যে এখানে লিখুন" maxlength="500"
+                          required></textarea>
                 <button
                     type="submit"
                     style="
@@ -269,13 +314,13 @@
             "
                     class="submit-button"
                 >
-                    শেয়ার করুন
+                    <img src="/assets/JPG/Share-Button.png"  alt="">
                 </button>
             </form>
         </section>
     </div>
     <!-- Video Upload Section -->
-    <section>
+    <section id="video">
         <!-- title  -->
         <div
             class=""
@@ -313,7 +358,7 @@
             <div>
                 <h4 style="margin: 20px 0">
                     ভিডিও আপলোড করতে <br/>
-                    নিচের আপলোড বাটন ক্লিক করুন
+                    নিচের আপলোড বাটন ক্লিক করুন (সর্বোচ্চ ২৫ এমবি)
                 </h4>
                 <!--  -->
                 <form action="{{route('video.save')}}" method="post" enctype="multipart/form-data">
@@ -321,18 +366,29 @@
                     @csrf
 
 
-                <div>
-                    <img
-                        src="/assets/JPG/Video-Link-Button.png"
-                        alt="Upload"
-                        style="cursor: pointer"
-                        onclick="document.getElementById('fileInput').click()"
-                    />
+                    <div>
 
-                    <input type="file" id="fileInput" name="video" style="display: none" accept="video/mp4, video/avi, video/mov" />
 
-                </div>
-                    <button type="submit">Upload Video</button> <!-- Optional submit button -->
+                        <!-- Custom label for file input -->
+                        <label for="fileInput" style="cursor: pointer; background-color: #0051a3; color: white; padding: 5px 5px; border-radius: 5px; display: inline-block;">
+                          <p style="font-size: 12px">আপলোড ভিডিও</p>
+
+                        </label>
+                        <input type="file" id="fileInput" name="video" style="display: none;" accept="video/mp4, video/avi, video/mov" required />
+
+                        <!-- Element to display the file name -->
+                        <div id="fileNameDisplay" style="margin-top: 10px; font-size: 16px;"></div>
+
+
+
+
+                    </div>
+                    <button type="submit" style="background: #0051a3; border: none; margin-top: 10px"><img
+                            src="/assets/JPG/Video-Link-Button.png"
+                            alt="Upload"
+                            style="cursor: pointer"
+                            {{--onclick="document.getElementById('fileInput').click()"--}}
+                        /></button> <!-- Optional submit button -->
                 </form>
             </div>
         </div>
@@ -373,24 +429,24 @@
 
                     @foreach($blogs as $item)
 
-                    <div
-                        style="
+                        <div
+                            style="
               background-color: white;
               padding: 15px;
               border-radius: 5px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
               text-align: center;
             "
-                    >
-                        <h3 style="margin: 0; font-size: 18px; color: gray">
-                           {{$item->name}}
-                        </h3>
-                        <p style="margin: 10px 0; font-size: 14px; color: gray">
-                            {{ \Illuminate\Support\Str::limit($item->details, 200, '') }}
+                        >
+                            <h3 style="margin: 0; font-size: 18px; color: gray">
+                                {{$item->name}}
+                            </h3>
+                            <p style="margin: 10px 0; font-size: 14px; color: gray">
+                                {{ \Illuminate\Support\Str::limit($item->details, 200, '') }}
 
-                        </p>
-                        <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
-                    </div>
+                            </p>
+                            <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                        </div>
 
                     @endforeach
 
@@ -456,6 +512,7 @@
         </div>
     </section>
 
+
     <!-- Video Section -->
     <section>
         <!-- title  -->
@@ -485,7 +542,7 @@
             ></div>
         </div>
 
-        <div style="margin: 20px 0">
+        <div style="margin: 20px 0; display: flex; justify-content: center">
             <div class="video-section">
                 @if(count($videos)>0)
 
@@ -498,9 +555,7 @@
                             </video>
                         @endif
 
-
                     @endforeach
-
 
                 @else
 
@@ -522,6 +577,8 @@
         </div>
     </section>
 
+
+
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
@@ -542,8 +599,10 @@
     </footer>
 
 
+
     <script>
         let selectedFrameId = null;
+        let uploadedImage = null;
 
         function selectFrame(frameId) {
             document.querySelectorAll('.image-frame').forEach(frame => {
@@ -569,21 +628,23 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const previewImg = document.getElementById('preview-uploaded');
-                    previewImg.src = e.target.result;
-                    document.getElementById('preview-text').style.display = 'none';
-                    document.getElementById('preview-frame').style.display = 'block';
+                    uploadedImage = new Image();
+                    uploadedImage.onload = function () {
+                        const previewImg = document.getElementById('preview-uploaded');
+                        previewImg.src = e.target.result;
+                        document.getElementById('preview-text').style.display = 'none';
+                        document.getElementById('preview-frame').style.display = 'block';
+                    }
+                    uploadedImage.src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function createCombinedImage() {
-            const previewContainer = document.getElementById('preview-container');
+        async function createCombinedImage() {
             const previewBackground = document.getElementById('preview-background');
-            const previewUploaded = document.getElementById('preview-uploaded');
 
-            if (!previewBackground.complete || !previewUploaded.complete) {
+            if (!previewBackground.complete || !uploadedImage) {
                 console.error("Images not fully loaded.");
                 return null;
             }
@@ -591,99 +652,91 @@
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            const scaleFactor = 4;
-            canvas.width = previewContainer.offsetWidth * scaleFactor;
-            canvas.height = previewContainer.offsetHeight * scaleFactor;
+            if (!ctx) {
+                console.error("Unable to create canvas context");
+                return null;
+            }
+
+            canvas.width = previewBackground.naturalWidth;
+            canvas.height = previewBackground.naturalHeight;
 
             // Draw white background
             ctx.fillStyle = 'white';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw uploaded image
-            ctx.drawImage(previewUploaded, 0, 0, canvas.width, canvas.height);
+            // Maintain aspect ratio for uploaded image
+            const aspectRatio = uploadedImage.width / uploadedImage.height;
+            let drawWidth, drawHeight;
 
-            // Draw frame
-            ctx.globalCompositeOperation = 'multiply';
+            if (canvas.width / canvas.height > aspectRatio) {
+                drawHeight = canvas.height;
+                drawWidth = drawHeight * aspectRatio;
+            } else {
+                drawWidth = canvas.width;
+                drawHeight = drawWidth / aspectRatio;
+            }
+
+            const offsetX = (canvas.width - drawWidth) / 2;
+            const offsetY = (canvas.height - drawHeight) / 2;
+
+            // Draw uploaded image in the center
+            ctx.drawImage(uploadedImage, offsetX, offsetY, drawWidth, drawHeight);
+
+            // Draw the frame over the uploaded image
             ctx.drawImage(previewBackground, 0, 0, canvas.width, canvas.height);
-            ctx.globalCompositeOperation = 'source-over';
 
-            return canvas.toDataURL('image/png');
+            return new Promise(resolve => {
+                canvas.toBlob(blob => {
+                    resolve(blob);
+                }, 'image/png');
+            });
         }
 
-        document.getElementById('save-button').addEventListener('click', function() {
-            const combinedImageDataURL = createCombinedImage();
+        document.getElementById('save-button').addEventListener('click', async function () {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = 'আপনার ছবি ডাউনলোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।';
+            messageElement.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #0051a3; color: white; padding: 20px; border-radius: 5px; z-index: 1000;';
+            document.body.appendChild(messageElement);
 
-            if (combinedImageDataURL) {
+            const blob = await createCombinedImage();
+            if (blob) {
+                const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
-                link.href = combinedImageDataURL;
+                link.href = url;
                 link.download = 'combined_image.png';
                 link.click();
-            } else {
-                alert('স���যুক্ত ছবি তৈরি করতে ব্যর্থ হয়েছে।');
-            }
-        });
-
-        document.getElementById('share-button').addEventListener('click', function() {
-            const combinedImageDataURL = createCombinedImage();
-
-            if (combinedImageDataURL) {
-                shareOnFacebook(combinedImageDataURL);
+                URL.revokeObjectURL(url);
             } else {
                 alert('সংযুক্ত ছবি তৈরি করতে ব্যর্থ হয়েছে।');
             }
+
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 3000);
         });
 
-        function shareOnFacebook(imageDataURL) {
-            // Convert data URL to blob
-            const blob = dataURLtoBlob(imageDataURL);
+        // Add event listener for the file input
+        document.getElementById('imageInput').addEventListener('change', uploadImage);
 
-            // Create a form and append the image file
-            const formData = new FormData();
-            formData.append('file', blob, 'combined_image.png');
-
-            // Simulate uploading the image and getting a URL
-            // In a real scenario, you would upload this to your server
-            simulateImageUpload(formData)
-                .then(imageUrl => {
-                    // Once you have the image URL, share it on Facebook
-                    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}`;
-                    window.open(shareUrl, 'Share on Facebook', 'width=600,height=400');
-                })
-                .catch(error => {
-                    console.error('Error uploading image:', error);
-                    alert('ছবি আপলোড করতে ব্যর্থ হয়েছে। দয়া করে আবার চেষ্টা করুন।');
-                });
-        }
-
-        function dataURLtoBlob(dataURL) {
-            const arr = dataURL.split(',');
-            const mime = arr[0].match(/:(.*?);/)[1];
-            const bstr = atob(arr[1]);
-            let n = bstr.length;
-            const u8arr = new Uint8Array(n);
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new Blob([u8arr], {type: mime});
-        }
-
-        function simulateImageUpload(formData) {
-            // This function simulates uploading an image and returning a URL
-            // In a real scenario, you would replace this with actual server communication
-            return new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    // Simulate a successful upload
-                    const fakeImageUrl = 'https://example.com/uploaded-image.png';
-                    resolve(fakeImageUrl);
-
-                    // Uncomment the following line to simulate an error
-                    // reject(new Error('Upload failed'));
-                }, 1000); // Simulate a 1-second upload time
+        // Add event listeners for the frame selection
+        document.querySelectorAll('.image-frame').forEach(frame => {
+            frame.addEventListener('click', function() {
+                selectFrame(this.id);
             });
-        }
+        });
     </script>
 
-
+    <script>
+        // JavaScript to display the file name after upload
+        document.getElementById('fileInput').addEventListener('change', function () {
+            const fileNameDisplay = document.getElementById('fileNameDisplay');
+            if (this.files.length > 0) {
+                fileNameDisplay.textContent = `Selected file: ${this.files[0].name}`;
+            } else {
+                fileNameDisplay.textContent = ''; // Clear if no file is selected
+            }
+        });
+    </script>
 
 
 @endsection

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Applicant;
+
 use App\Models\Blog;
 use App\Models\Certificate;
 use App\Models\Video;
@@ -13,8 +13,11 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Intervention\Image\Facades\Image;
-use Jorenvh\Share\Share;
+
+use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
+use Jorenvh\Share\Share;
 
 class Controller extends BaseController
 {
@@ -25,10 +28,28 @@ class Controller extends BaseController
         $title = "Harpoon Campaign";
         $description = "Harpoon Campaign";
         $pageUrl = "";
-        $image = "/assets/images/Banner1.jpg";
 
-        $blogs= Blog::limit(9)->get();
-        $videos= Video::with(['media'])->limit(9)->get();
+
+
+        if (Session::has('certificate')) {
+            $certificate = Session::get('certificate');
+            if (is_array($certificate)) {
+                // Get the last value from the array
+                $image = end($certificate);
+            } else {
+                // If it's not an array, use the value directly
+                $image = $certificate;
+            }
+        } else {
+            $image = "";
+        }
+
+
+
+
+
+        $blogs= Blog::orderBy('created_at',"DESC")->limit(9)->get();
+        $videos= Video::with(['media'])->orderBy('created_at',"DESC")->limit(9)->get();
 
         return view('frontend.index',
             compact('title',
@@ -40,69 +61,21 @@ class Controller extends BaseController
 
     }
 
-    public function urlRedirect($value)
-    {
-
-        $image= '/certificates/'.$value.'_certificate.png';
-
-        return \view('welcome',compact('image'));
-        // return redirect()->route('home');
-    }
-
-    public function certificate()
-    {
-        $applicantIds = request()->session()->get('applicant_id');
-        if (!$applicantIds) {
-            return redirect()->route('home');
-        }
-        $firstApplicantId = $applicantIds[0];
-
-        $applicant = Applicant::find($firstApplicantId);
-        $updatedFilename = str_replace("_certificate.png", "", $applicant->file);
-
-        $shareComponent = \Share::page(
-            "" . $updatedFilename,
-            "Harpoon Campaign",
-        )->facebook([
-            'title' => "Harpoon Campaign ",
-            'description' => "Harpoon Campaign ",
-            'image' => $applicant->file
-        ]);
-        /*  ->twitter()
-          ->linkedin()
-          ->telegram()
-          ->whatsapp()
-          ->reddit();*/
-
-
-        $title = "Harpoon Campaign";
-        $description = "Harpoon Campaign";
-        $pageUrl = "" . $applicant->file;
-        $image = "" . $applicant->file;
-
-        Session::forget('applicant_id');
-
-        return view('frontend.certificate', compact('applicant', 'shareComponent', 'title', 'description', 'pageUrl', 'image'));
-
-    }
 
     public function certificateSave(Request $request , $value)
     {
-        //return $request->all();
         if ($request->method() === 'GET') {
             return redirect()->route('home');
         }
 
-
         try {
-
             // Load the certificate template image
             $template = Image::make(public_path('/assets/certificates/Certificate.png'));
 
-// Calculate the x-coordinate to center the text horizontally
+            // Calculate the x-coordinate to center the text horizontally
             $x = $template->getWidth() / 2;
 
-// Add the applicant's name to the certificate, centered horizontally
+            // Add the applicant's name to the certificate, centered horizontally
             $template->text($request['name'], $x, 150, function ($font) {
                 $font->file(public_path('/font/HindSiliguri-Bold.ttf'));
                 $font->size(50);
@@ -110,27 +83,32 @@ class Controller extends BaseController
                 $font->align('center'); // Align the text to the center point
             });
 
-
-
             // Save the certificate image with a dynamic name
-            $imageName = time(). '_certificate.png';
+            $imageName = time() . '_certificate.png';
             $template->save(public_path('certificates/' . $imageName));
             $request['file'] = 'certificates/' . $imageName;
 
+            // Create the certificate record
             $certificate = Certificate::create($request->all());
 
 
 
-
-
+            // Meta information for social sharing
             $title = "Harpoon Campaign";
             $description = "Harpoon Campaign";
-            $pageUrl = "" . $certificate->file;
-            $image = "" . $certificate->file;
-            $shareComponent= [];
+            $pageUrl = "https://hygieneforall.co/certificate-save/" . $value;
+
+            // Ensure to use the absolute path for image URL
+            $image = url($certificate->file);  // Absolute URL for Facebook to scrape
+
+            Session::push('certificate', $image);
+
+            return redirect()->route('certificate.show',['id' => $certificate->id]);
 
 
-            return view('frontend.certificate', compact('certificate', 'shareComponent', 'title', 'description', 'pageUrl', 'image','value'));
+
+
+            return view('frontend.certificate', compact('certificate', 'title', 'description', 'pageUrl', 'image', 'value'));
 
         } catch (\Exception $e) {
             return [
@@ -138,8 +116,21 @@ class Controller extends BaseController
                 'message' => $e->getMessage(),
             ];
         }
-
     }
+
+
+    public function show($id)
+    {
+        $certificate = Certificate::findOrFail($id);
+
+        $title = "Harpoon Campaign - Certificate for " . $certificate->name;
+        $description = "View the Harpoon Campaign certificate for " . $certificate->name;
+        $pageUrl = route('certificate.show', ['id' => $id]);
+        $image = url($certificate->file);
+
+        return view('frontend.certificate', compact('certificate', 'title', 'description', 'pageUrl', 'image', 'id'));
+    }
+
     public function blogSave(Request $request)
     {
         //return $request->all();
@@ -152,12 +143,16 @@ class Controller extends BaseController
 
             $certificate = Blog::create($request->all());
 
+            Alert::success('ধন্যবাদ', ' আপনার ডাটা সাবমিট হয়েছে  ');
+
+
 
             return redirect()->route('home');
 
 
 
         } catch (\Exception $e) {
+            Alert::error('Error', $e->getMessage());
           return redirect()->route('home');
         }
 
@@ -165,28 +160,67 @@ class Controller extends BaseController
 
     public function videoSave(Request $request)
     {
+
+
+
+        if (!$request->hasFile('video')) {
+
+            Alert::error('Error', "Please upload Your video");
+
+            return back()->with('error', 'Video upload failed.');
+
+
+        }
+
         // Validate the file upload
         $request->validate([
             'video' => 'required|mimes:mp4,avi,mov|max:204800' // max size in kilobytes (200 MB)
         ]);
 
-        if ($request->hasFile('video')) {
-            // Create a new video entry in the database
-            $video = Video::create($request->all()); // Adjust as needed
 
-            // Get the uploaded video file
-            $uploadedVideo = $request->file('video');
+        try {
+            if ($request->hasFile('video')) {
+                // Create a new video entry in the database
+                $video = Video::create($request->all()); // Adjust as needed
 
-            // Move the video to a temporary location
-            $tempPath = $uploadedVideo->storeAs('tmp/uploads', $uploadedVideo->getClientOriginalName(), 'public');
+                // Get the uploaded video file
+                $uploadedVideo = $request->file('video');
 
-            // Add the video to the media collection
-            $video->addMedia(storage_path('app/public/' . $tempPath))->toMediaCollection('video');
+                // Move the video to a temporary location
+                $tempPath = $uploadedVideo->storeAs('tmp/uploads', $uploadedVideo->getClientOriginalName(), 'public');
 
-            return back()->with('success', 'Video uploaded successfully!');
+                // Add the video to the media collection
+                $video->addMedia(storage_path('app/public/' . $tempPath))->toMediaCollection('video');
+
+                Alert::success('ধন্যবাদ', ' আপনার ডাটা সাবমিট হয়েছে  ');
+
+                return back()->with('success', 'Video uploaded successfully!');
+            }
+        }catch (\Exception $e) {
+
+            Alert::error('Error', $e->getMessage());
+
+            return back()->with('error', 'Video upload failed.');
+
         }
 
-        return back()->with('error', 'Video upload failed.');
+
+
+
+    }
+
+    // Example controller method in Laravel
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $path = $image->store('public/images'); // Save the image in the public directory
+
+            // Return the URL of the uploaded image
+            return response()->json(['url' => asset('storage/images/' . basename($path))]);
+        }
+
+        return response()->json(['error' => 'No file uploaded.'], 400);
     }
 
 }
