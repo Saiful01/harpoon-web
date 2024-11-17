@@ -11,21 +11,25 @@
             display: inline-block;
             cursor: pointer;
         }
+
         .image-frame.selected {
             border-color: red;
         }
+
         #preview-frame {
             position: relative;
             width: 300px;
             height: 300px;
             margin: 0 auto;
         }
+
         #preview-container {
             width: 100%;
             height: 100%;
             background-color: white;
             position: relative;
         }
+
         #preview-uploaded, #preview-background {
             position: absolute;
             top: 0;
@@ -34,9 +38,11 @@
             height: 100%;
             object-fit: contain;
         }
+
         #preview-uploaded {
             z-index: 1;
         }
+
         #preview-background {
             z-index: 2;
         }
@@ -196,12 +202,13 @@
                 <h3>আপনার পোস্টার</h3>
                 <button style="background: none; border: none;" id="save-button"><img src="/assets/JPG/Save-Button.png"
                                                                                       alt=""/></button>
-               {{-- <button style="background: none; border: none;" id="shareButton"><img src="/assets/JPG/Share-Button.png"
-                                                                                      alt=""/>--}}
+                {{-- <button style="background: none; border: none;" id="shareButton"><img src="/assets/JPG/Share-Button.png"
+                                                                                       alt=""/>--}}
                 </button>
             </div>
             <div class="hash-section">
-                <p>নিচের  হ্যাশট্যাগ গুলো ব্যবহার করে সোশ্যাল মিডিয়াতে পোস্ট করুন: <br>#Harpoon #HygieneForAllPowerForHer</p>
+                <p>নিচের হ্যাশট্যাগ গুলো ব্যবহার করে সোশ্যাল মিডিয়াতে পোস্ট করুন: <br>#Harpoon
+                    #HygieneForAllPowerForHer</p>
             </div>
 
         </div>
@@ -369,16 +376,16 @@
 
 
                         <!-- Custom label for file input -->
-                        <label for="fileInput" style="cursor: pointer; background-color: #0051a3; color: white; padding: 5px 5px; border-radius: 5px; display: inline-block;">
-                          <p style="font-size: 12px">আপলোড ভিডিও</p>
+                        <label for="fileInput"
+                               style="cursor: pointer; background-color: #0051a3; color: white; padding: 5px 5px; border-radius: 5px; display: inline-block;">
+                            <p style="font-size: 12px">আপলোড ভিডিও</p>
 
                         </label>
-                        <input type="file" id="fileInput" name="video" style="display: none;" accept="video/mp4, video/avi, video/mov" required />
+                        <input type="file" id="fileInput" name="video" style="display: none;"
+                               accept="video/mp4, video/avi, video/mov" required/>
 
                         <!-- Element to display the file name -->
                         <div id="fileNameDisplay" style="margin-top: 10px; font-size: 16px;"></div>
-
-
 
 
                     </div>
@@ -428,60 +435,7 @@
 
                     @foreach($blogs as $item)
 
-                     {{--   <!-- Modal -->
-                        <div id="modal" class="modal">
-                            <div class="modal-content">
-                                <span class="modal-close" onclick="closeModal()">&times;</span>
-                                <h3 id="modal-title"></h3>
-                                <p id="modal-content"></p>
-                            </div>
-                        </div>
-
-
-                        <!-- Modal -->
-                        <div id="myModal" style="display: none">
-                            <div
-                                style="
-          background-color: white;
-          padding: 20px;
-          border-radius: 5px;
-          width: 90%;
-          max-width: 500px;
-          margin: 100px auto;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          text-align: center;
-          position: relative;
-        "
-                            >
-                                <h3 style="margin: 0; font-size: 18px">শমী ওয়াদিদ</h3>
-                                <p style="margin: 10px 0; font-size: 14px">
-                                    বিস্তারিত আলোচনা এখানে দেওয়া হয়েছে। ফিল্ম হাউজিং ও আলোর গুরুত্ব
-                                    সম্পর্কে আরও জানুন।
-                                </p>
-                                <button
-                                    id="closeModal"
-                                    style="
-            background-color: #007bff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-          "
-                                >
-                                    বন্ধ করুন
-                                </button>
-                            </div>
-
-
-                            //button modify
-                            <button
-                                style="color: #007bff; font-size: 14px"
-                                onclick="openModal('হেদায়েত উল্লাহ', 'ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত বিবেচনা।')"
-                            >
-                                আরও পড়ুন...
-                            </button>
-                        </div>--}}
-
+                        <!-- Comment 1 -->
                         <div
                             style="
               background-color: white;
@@ -489,6 +443,7 @@
               border-radius: 5px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
               text-align: center;
+              margin-bottom: 15px;
             "
                         >
                             <h3 style="margin: 0; font-size: 18px; color: gray">
@@ -498,13 +453,23 @@
                                 {{ \Illuminate\Support\Str::limit($item->details, 200, '') }}
 
                             </p>
-                            <a href="#"  style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                            <button
+                                style="color: #007bff; font-size: 14px; padding: 0px 5px"
+                                onclick="openModal('{{ addslashes($item->name) }}', '{{ addslashes($item->details) }}')"
+                            >
+                                আরও পড়ুন...
+                            </button>
+
                         </div>
+
+
 
                     @endforeach
 
                 @else
 
+
+                    <!-- Comment 1 -->
                     <div
                         style="
               background-color: white;
@@ -512,6 +477,7 @@
               border-radius: 5px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
               text-align: center;
+              margin-bottom: 15px;
             "
                     >
                         <h3 style="margin: 0; font-size: 18px; color: gray">
@@ -521,9 +487,15 @@
                             ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত
                             বিবেচনা।
                         </p>
-                        <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                        <button
+                            style="color: #007bff; font-size: 14px; padding: 0px 5px"
+                            onclick="openModal('সুমাইয়া বরকতউল্লাহ', 'ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত বিবেচনা।')"
+                        >
+                            আরও পড়ুন...
+                        </button>
                     </div>
 
+                    <!-- Comment 2 -->
                     <div
                         style="
               background-color: white;
@@ -531,6 +503,7 @@
               border-radius: 5px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
               text-align: center;
+              margin-bottom: 15px;
             "
                     >
                         <h3 style="margin: 0; font-size: 18px; color: gray">শমী ওয়াদিদ</h3>
@@ -538,9 +511,15 @@
                             ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত
                             বিবেচনা।
                         </p>
-                        <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                        <button
+                            style="color: #007bff; font-size: 14px"
+                            onclick="openModal('শমী ওয়াদিদ', 'ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত বিবেচনা।')"
+                        >
+                            আরও পড়ুন...
+                        </button>
                     </div>
 
+                    <!-- Comment 3 -->
                     <div
                         style="
               background-color: white;
@@ -557,12 +536,68 @@
                             ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত
                             বিবেচনা।
                         </p>
-                        <a href="#" style="color: #007bff; font-size: 14px">আরও পড়ুন...</a>
+                        <button
+                            style="color: #007bff; font-size: 14px"
+                            onclick="openModal('হেদায়েত উল্লাহ', 'ফিল্ম হাউজিং নিয়ে কথা বলতে গেলে অবশ্যই আলো গবেষকের পরিপ্রেক্ষিত বিবেচনা।')"
+                        >
+                            আরও পড়ুন...
+                        </button>
                     </div>
+
+
                 @endif
 
             </div>
         </div>
+
+
+
+
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <h3 id="modal-title"></h3>
+                <p id="modal-content"></p>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+        <div id="myModal" style="display: none">
+            <div
+                style="
+          background-color: white;
+          padding: 20px;
+          border-radius: 5px;
+          width: 90%;
+          max-width: 500px;
+          margin: 100px auto;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          position: relative;
+        "
+            >
+                <h3 style="margin: 0; font-size: 18px">শমী ওয়াদিদ</h3>
+                <p style="margin: 10px 0; font-size: 14px">
+                    বিস্তারিত আলোচনা এখানে দেওয়া হয়েছে। ফিল্ম হাউজিং ও আলোর গুরুত্ব
+                    সম্পর্কে আরও জানুন।
+                </p>
+                <button
+                    id="closeModal"
+                    style="
+            background-color: #007bff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+                >
+                    বন্ধ করুন
+                </button>
+            </div>
+        </div>
+
     </section>
 
 
@@ -783,7 +818,7 @@
 
         // Add event listeners for the frame selection
         document.querySelectorAll('.image-frame').forEach(frame => {
-            frame.addEventListener('click', function() {
+            frame.addEventListener('click', function () {
                 selectFrame(this.id);
             });
         });
@@ -804,7 +839,7 @@
         // Open the modal and set its content
         function openModal(title, content) {
             document.getElementById("modal-title").innerText = title;
-            document.getElementById("modal-content").innerText = content;
+            document.getElementById("modal-content").innerHTML = content;
             document.getElementById("modal").style.display = "block";
         }
 
@@ -821,6 +856,5 @@
             }
         };
     </script>
-
 
 @endsection
