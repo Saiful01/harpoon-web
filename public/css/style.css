@@ -553,8 +553,70 @@ textarea {
 @media (max-width: 768px) {
     .video-section {
         grid-template-columns: 1fr;
+        width: 100%;
         /* 1 video per row on smaller screens */
     }
+
+    /* Adjust header */
+    .header-nav nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Carousel image height */
+    .carousel-image {
+        height: 150px;
+    }
+
+    /* Image size in join-us section */
+    .photo-frame img {
+        width: 150px;
+    }
+
+    .share-section .input-data {
+        display: block;
+    }
+
+    /* Footer alignment for small screens */
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .footer-right img {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Story Section adjustments */
+    .story-section {
+        padding: 20px;
+        width: 100%;
+    }
+
+    .story-section h2 {
+        font-size: 18px;
+    }
+
+    /* Show-image section adjustments */
+    .show-image h3 {
+        width: 250px;
+        height: 250px;
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Video section layout */
+    .video-section {
+        flex-direction: column;
+    }
+
+    .video-section video {
+        max-width: 100%;
+    }
+
+
 }
 
 .modal {
