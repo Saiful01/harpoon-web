@@ -25,8 +25,8 @@ class Controller extends BaseController
 
     public function home()
     {
-        $title = "Harpoon Campaign";
-        $description = "Harpoon Campaign";
+        $title = "Harpoon: Hygiene for All, Power for Her";
+        $description = "Harpoon: Hygiene for All, Power for Her";
         $pageUrl = "";
 
 
@@ -94,8 +94,8 @@ class Controller extends BaseController
 
 
             // Meta information for social sharing
-            $title = "Harpoon Campaign";
-            $description = "Harpoon Campaign";
+            $title = "Harpoon: Hygiene for All, Power for Her";
+            $description = "Harpoon: Hygiene for All, Power for Her";
             $pageUrl = "https://hygieneforall.co/certificate-save/" . $value;
 
             // Ensure to use the absolute path for image URL
@@ -123,8 +123,8 @@ class Controller extends BaseController
     {
         $certificate = Certificate::findOrFail($id);
 
-        $title = "Harpoon Campaign - Certificate for " . $certificate->name;
-        $description = "View the Harpoon Campaign certificate for " . $certificate->name;
+        $title = "Harpoon: Hygiene for All, Power for Her - Certificate for " . $certificate->name;
+        $description = "View the Harpoon: Hygiene for All, Power for Her certificate for " . $certificate->name;
         $pageUrl = route('certificate.show', ['id' => $id]);
         $image = url($certificate->file);
 
