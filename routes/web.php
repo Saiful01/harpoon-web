@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [Controller::class, 'home'])->name('home');
 Route::get('/certificate', [Controller::class, 'certificate'])->name('certificate');
-Route::get('/certificate/{id}', [Controller::class, 'show'])->name('certificate.show');
+Route::get('/certificate/{id}', [Controller::class, 'certificateShow'])->name('certificate.show');
 
 
 

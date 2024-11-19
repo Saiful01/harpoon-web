@@ -119,7 +119,7 @@ class Controller extends BaseController
     }
 
 
-    public function show($id)
+    public function certificateShow($id)
     {
         $certificate = Certificate::findOrFail($id);
 
