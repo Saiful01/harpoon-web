@@ -57,23 +57,25 @@
                 </ul>
             </li>
         @endcan
-        @can('certificate_access')
-            <li class="c-sidebar-nav-item">
-                <a href="{{ route("admin.certificates.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/certificates") || request()->is("admin/certificates/*") ? "c-active" : "" }}">
-                    <i class="fa-fw fas fa-file-image c-sidebar-nav-icon">
 
-                    </i>
-                    {{ trans('cruds.certificate.title') }}
-                </a>
-            </li>
-        @endcan
         @can('blog_access')
             <li class="c-sidebar-nav-item">
                 <a href="{{ route("admin.blogs.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/blogs") || request()->is("admin/blogs/*") ? "c-active" : "" }}">
                     <i class="fa-fw fas fa-th-large c-sidebar-nav-icon">
 
                     </i>
-                    {{ trans('cruds.blog.title') }}
+                    Information
+                </a>
+            </li>
+        @endcan
+
+       {{-- @can('certificate_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.certificates.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/certificates") || request()->is("admin/certificates/*") ? "c-active" : "" }}">
+                    <i class="fa-fw fas fa-file-image c-sidebar-nav-icon">
+
+                    </i>
+                    {{ trans('cruds.certificate.title') }}
                 </a>
             </li>
         @endcan
@@ -96,7 +98,7 @@
                     {{ trans('cruds.image.title') }}
                 </a>
             </li>
-        @endcan
+        @endcan--}}
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             @can('profile_password_edit')
                 <li class="c-sidebar-nav-item">

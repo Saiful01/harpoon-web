@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', [Controller::class, 'home'])->name('home');
+Route::get('/new', [Controller::class, 'new'])->name('new');
 Route::get('/certificate', [Controller::class, 'certificate'])->name('certificate');
 Route::get('/certificate/{id}', [Controller::class, 'certificateShow'])->name('certificate.show');
 

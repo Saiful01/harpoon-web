@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-@can('blog_create')
+{{--@can('blog_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route('admin.blogs.create') }}">
@@ -8,10 +8,10 @@
             </a>
         </div>
     </div>
-@endcan
+@endcan--}}
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.blog.title_singular') }} {{ trans('global.list') }}
+        Information {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -35,7 +35,7 @@
                             {{ trans('cruds.blog.fields.phone') }}
                         </th>
                         <th>
-                            {{ trans('cruds.blog.fields.details') }}
+                            Link
                         </th>
                         <th>
                             &nbsp;
@@ -61,10 +61,10 @@
                                 {{ $blog->phone ?? '' }}
                             </td>
                             <td>
-                                {{ $blog->details ?? '' }}
+                                <a href="{{$blog->fb_link}}" target="_blank">Link</a>
                             </td>
                             <td>
-                                @can('blog_show')
+                             {{--   @can('blog_show')
                                     <a class="btn btn-xs btn-primary" href="{{ route('admin.blogs.show', $blog->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
@@ -74,7 +74,7 @@
                                     <a class="btn btn-xs btn-info" href="{{ route('admin.blogs.edit', $blog->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
+                                @endcan--}}
 
                                 @can('blog_delete')
                                     <form action="{{ route('admin.blogs.destroy', $blog->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
@@ -142,7 +142,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

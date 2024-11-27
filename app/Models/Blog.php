@@ -24,6 +24,7 @@ class Blog extends Model
         'email',
         'phone',
         'details',
+        'fb_link',
         'created_at',
         'updated_at',
         'deleted_at',

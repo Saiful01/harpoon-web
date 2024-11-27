@@ -17,7 +17,7 @@ use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-use Jorenvh\Share\Share;
+use Share;
 
 class Controller extends BaseController
 {
@@ -25,10 +25,9 @@ class Controller extends BaseController
 
     public function home()
     {
-        $title = "Harpoon: Hygiene for All, Power for Her";
-        $description = "Harpoon: Hygiene for All, Power for Her";
+        $title = "DBL CERAMICS BUSINESS CONFERENCE 2024";
+        $description = "DBL CERAMICS BUSINESS CONFERENCE 2024";
         $pageUrl = "";
-
 
 
         if (Session::has('certificate')) {
@@ -41,28 +40,75 @@ class Controller extends BaseController
                 $image = $certificate;
             }
         } else {
-            $image = "";
+            $image = "/assets/images/FaceBook-Profile.png";
         }
 
 
+      //  $blogs = Blog::orderBy('created_at', "DESC")->limit(9)->get();
+      //  $videos = Video::with(['media'])->orderBy('created_at', "DESC")->limit(9)->get();
 
 
+        $shares = Share::page('https://dblceramics.habson.org/', 'Dbl Ceramic')
+            ->facebook()
+            ->twitter()
+            ->linkedin()
+            ->whatsapp()
+            ->getRawLinks();
 
-        $blogs= Blog::orderBy('created_at',"DESC")->limit(9)->get();
-        $videos= Video::with(['media'])->orderBy('created_at',"DESC")->limit(9)->get();
-
-        return view('frontend.index',
+        return view('frontend.test',
             compact('title',
-                'blogs',
-                'videos',
+
                 'description',
+                'shares',
                 'pageUrl',
                 'image'));
 
     }
 
+    public function new()
+    {
+        $title = "DBL CERAMICS BUSINESS CONFERENCE 2024";
+        $description = "DBL CERAMICS BUSINESS CONFERENCE 2024";
+        $pageUrl = "";
 
-    public function certificateSave(Request $request , $value)
+
+        if (Session::has('certificate')) {
+            $certificate = Session::get('certificate');
+            if (is_array($certificate)) {
+                // Get the last value from the array
+                $image = end($certificate);
+            } else {
+                // If it's not an array, use the value directly
+                $image = $certificate;
+            }
+        } else {
+            $image = "/assets/images/FaceBook-Profile.png";
+        }
+
+
+       // $blogs = Blog::orderBy('created_at', "DESC")->limit(9)->get();
+       // $videos = Video::with(['media'])->orderBy('created_at', "DESC")->limit(9)->get();
+
+        $shares = Share::page('https://dblceramics.habson.org/', 'Dbl Ceramic')
+            ->facebook()
+            ->twitter()
+            ->linkedin()
+            ->whatsapp()
+            ->getRawLinks();
+
+
+        return view('frontend.test',
+            compact('title',
+
+                'description',
+                'pageUrl',
+                'shares',
+                'image'));
+
+    }
+
+
+    public function certificateSave(Request $request, $value)
     {
         if ($request->method() === 'GET') {
             return redirect()->route('home');
@@ -92,10 +138,9 @@ class Controller extends BaseController
             $certificate = Certificate::create($request->all());
 
 
-
             // Meta information for social sharing
-            $title = "Harpoon: Hygiene for All, Power for Her";
-            $description = "Harpoon: Hygiene for All, Power for Her";
+            $title = "DBL CERAMICS BUSINESS CONFERENCE 2024";
+            $description = "DBL CERAMICS BUSINESS CONFERENCE 2024";
             $pageUrl = "https://hygieneforall.co/certificate-save/" . $value;
 
             // Ensure to use the absolute path for image URL
@@ -103,9 +148,7 @@ class Controller extends BaseController
 
             Session::push('certificate', $image);
 
-            return redirect()->route('certificate.show',['id' => $certificate->id]);
-
-
+            return redirect()->route('certificate.show', ['id' => $certificate->id]);
 
 
             return view('frontend.certificate', compact('certificate', 'title', 'description', 'pageUrl', 'image', 'value'));
@@ -123,8 +166,8 @@ class Controller extends BaseController
     {
         $certificate = Certificate::findOrFail($id);
 
-        $title = "Harpoon: Hygiene for All, Power for Her - Certificate for " . $certificate->name;
-        $description = "View the Harpoon: Hygiene for All, Power for Her certificate for " . $certificate->name;
+        $title = "DBL CERAMICS BUSINESS CONFERENCE 2024 - Certificate for " . $certificate->name;
+        $description = "View the DBL CERAMICS BUSINESS CONFERENCE 2024 certificate for " . $certificate->name;
         $pageUrl = route('certificate.show', ['id' => $id]);
         $image = url($certificate->file);
 
@@ -146,21 +189,18 @@ class Controller extends BaseController
             Alert::success('ধন্যবাদ', ' আপনার ডাটা সাবমিট হয়েছে  ');
 
 
-
             return redirect()->route('home');
-
 
 
         } catch (\Exception $e) {
             Alert::error('Error', $e->getMessage());
-          return redirect()->route('home');
+            return redirect()->route('home');
         }
 
     }
 
     public function videoSave(Request $request)
     {
-
 
 
         if (!$request->hasFile('video')) {
@@ -196,15 +236,13 @@ class Controller extends BaseController
 
                 return back()->with('success', 'Video uploaded successfully!');
             }
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
 
             Alert::error('Error', $e->getMessage());
 
             return back()->with('error', 'Video upload failed.');
 
         }
-
-
 
 
     }

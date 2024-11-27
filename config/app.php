@@ -183,6 +183,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
+        Jorenvh\Share\Providers\ShareServiceProvider::class,
+
         Intervention\Image\ImageServiceProvider::class,
 
 
@@ -216,6 +218,8 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
+        'Share' => Jorenvh\Share\ShareFacade::class,
 
         'Image' => Intervention\Image\Facades\Image::class,
 
